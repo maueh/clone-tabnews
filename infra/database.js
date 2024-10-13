@@ -11,10 +11,10 @@ async function query(queryObject) {
   await client.connect();
   const result = await client.query(queryObject);
 
-  const res = await client.query("SELECT $1::text as message", ["Hello"]);
-  console.log(res.rows[0].messsage);
-  return result;
+  // const res = await client.query("SELECT $1::text as message", ["Hello"]);
+  // console.log(res.rows[0].messsage);
   await client.end();
+  return result;
 }
 export default {
   query: query,

@@ -8,13 +8,19 @@ async function query(queryObject) {
     database: process.env.POSTGRES_DB,
     password: process.env.POSTGRES_PASSWORD,
   });
-  await client.connect();
-  const result = await client.query(queryObject);
 
-  // const res = await client.query("SELECT $1::text as message", ["Hello"]);
-  // console.log(res.rows[0].messsage);
-  await client.end();
-  return result;
+  await client.connect();
+  try {
+    const result = await client.query(queryObject);
+
+    // const res = await client.query("SELECT $1::text as message", ["Hello"]);
+    // console.log(res.rows[0].messsage);
+    return result;
+  } catch (error) {
+    console.error(error);
+  } finally {
+    await client.end();
+  }
 }
 export default {
   query: query,

@@ -15,8 +15,8 @@ async function query(queryObject) {
     database: process.env.POSTGRES_DB,
     password: process.env.POSTGRES_PASSWORD,
   });
-  await client.connect();
   try {
+    await client.connect();
     const result = await client.query(queryObject);
 
     // const res = await client.query("SELECT $1::text as message", ["Hello"]);
@@ -24,8 +24,13 @@ async function query(queryObject) {
     return result;
   } catch (error) {
     console.error(error);
+    throw error;
   } finally {
-    await client.end();
+    try {
+      await client.end();
+    } catch (error) {
+      console.error("Erro ao tentar desconectar");
+    }
   }
 }
 export default {

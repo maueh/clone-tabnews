@@ -26,12 +26,7 @@ async function query(queryObject) {
     console.error(error);
     throw error;
   } finally {
-    try {
-      await client.end();
-    } catch (error) {
-      console.log("Erro ao tentar desconectar");
-      console.error("Erro ao tentar desconectar");
-    }
+    await client.end();
   }
 }
 export default {
